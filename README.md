@@ -1,6 +1,6 @@
 # Wan 2.2 Enhanced NSFW (image to video) — RunPod Serverless worker
 
-A ready-to-build [RunPod Serverless](https://runpod.io?ref=qpguwapm) worker for **Wan 2.2 Enhanced NSFW FastMove v2**, an adult Wan 2.2 14B image-to-video fine-tune (4 steps). Based on the official [`runpod/worker-comfyui`](https://github.com/runpod-workers/worker-comfyui).
+A ready-to-build [RunPod Serverless](https://runpod.io?ref=qpguwapm) worker for **[Wan 2.2 Enhanced NSFW FastMove v2](https://civitai.com/models/2053259?modelVersionId=2477539)**, an adult Wan 2.2 14B image-to-video fine-tune (4 steps). Based on the official [`runpod/worker-comfyui`](https://github.com/runpod-workers/worker-comfyui).
 
 Models are baked into the image, so a cold start does not re-download anything.
 
@@ -10,10 +10,10 @@ Models are baked into the image, so a cold start does not re-download anything.
 
 | File | Source | Size |
 |---|---|---|
-| `diffusion_models/wan22_enhanced_nsfw_fastmove_v2_fp8_high.safetensors` | Civitai 2053259 / version 2477539 | 13.3 GB |
-| `diffusion_models/wan22_enhanced_nsfw_fastmove_v2_fp8_low.safetensors` | Civitai 2053259 / version 2477548 | 13.3 GB |
-| `text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors` | Comfy-Org/Wan-2.1 (Apache 2.0) | 6.7 GB |
-| `vae/wan_2.1_vae.safetensors` | Comfy-Org/Wan-2.1 | 0.3 GB |
+| `diffusion_models/wan22_enhanced_nsfw_fastmove_v2_fp8_high.safetensors` | [Civitai 2053259 / version 2477539](https://civitai.com/models/2053259?modelVersionId=2477539) | 13.3 GB |
+| `diffusion_models/wan22_enhanced_nsfw_fastmove_v2_fp8_low.safetensors` | [Civitai 2053259 / version 2477548](https://civitai.com/models/2053259?modelVersionId=2477548) | 13.3 GB |
+| `text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors` | [Comfy-Org/Wan-2.1](https://huggingface.co/Comfy-Org/Wan-2.1) (Apache 2.0) | 6.7 GB |
+| `vae/wan_2.1_vae.safetensors` | [Comfy-Org/Wan-2.1](https://huggingface.co/Comfy-Org/Wan-2.1) | 0.3 GB |
 
 Just the model as its creator released it — no LoRAs, no extra nodes. All files are checked by SHA-256 at build time. ComfyUI is upgraded to 0.39.0.
 
