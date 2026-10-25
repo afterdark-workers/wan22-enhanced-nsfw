@@ -1,0 +1,242 @@
+{
+ "format": "pack/1",
+ "engine": "comfyui",
+ "kind": "Image To Video",
+ "id": "wan22-enhanced-nsfw",
+ "label": "Wan 2.2 Enhanced NSFW (image to video)",
+ "note": "Starts from your picture: 81 frames (5 s at 16 fps), 4 steps. Describe the motion, not the picture.",
+ "sizes": [
+  [
+   832,
+   480,
+   "Landscape"
+  ],
+  [
+   480,
+   832,
+   "Portrait"
+  ],
+  [
+   624,
+   624,
+   "Square"
+  ]
+ ],
+ "size_step": 16,
+ "workflow": {
+  "10": {
+   "class_type": "UNETLoader",
+   "inputs": {
+    "unet_name": "wan22_enhanced_nsfw_fastmove_v2_fp8_high.safetensors",
+    "weight_dtype": "default"
+   }
+  },
+  "11": {
+   "class_type": "UNETLoader",
+   "inputs": {
+    "unet_name": "wan22_enhanced_nsfw_fastmove_v2_fp8_low.safetensors",
+    "weight_dtype": "default"
+   }
+  },
+  "12": {
+   "class_type": "CLIPLoader",
+   "inputs": {
+    "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors",
+    "type": "wan",
+    "device": "default"
+   }
+  },
+  "13": {
+   "class_type": "VAELoader",
+   "inputs": {
+    "vae_name": "wan_2.1_vae.safetensors"
+   }
+  },
+  "14": {
+   "class_type": "LoadImage",
+   "inputs": {
+    "image": "start_image.png"
+   }
+  },
+  "20": {
+   "class_type": "ModelSamplingSD3",
+   "inputs": {
+    "model": [
+     "10",
+     0
+    ],
+    "shift": 5.0
+   }
+  },
+  "21": {
+   "class_type": "ModelSamplingSD3",
+   "inputs": {
+    "model": [
+     "11",
+     0
+    ],
+    "shift": 5.0
+   }
+  },
+  "6": {
+   "class_type": "CLIPTextEncode",
+   "inputs": {
+    "clip": [
+     "12",
+     0
+    ],
+    "text": ""
+   }
+  },
+  "7": {
+   "class_type": "ConditioningZeroOut",
+   "inputs": {
+    "conditioning": [
+     "6",
+     0
+    ]
+   }
+  },
+  "55": {
+   "class_type": "WanImageToVideo",
+   "inputs": {
+    "positive": [
+     "6",
+     0
+    ],
+    "negative": [
+     "7",
+     0
+    ],
+    "vae": [
+     "13",
+     0
+    ],
+    "start_image": [
+     "14",
+     0
+    ],
+    "width": 832,
+    "height": 480,
+    "length": 81,
+    "batch_size": 1
+   }
+  },
+  "30": {
+   "class_type": "KSamplerAdvanced",
+   "inputs": {
+    "model": [
+     "20",
+     0
+    ],
+    "add_noise": "enable",
+    "noise_seed": 1,
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "positive": [
+     "55",
+     0
+    ],
+    "negative": [
+     "55",
+     1
+    ],
+    "latent_image": [
+     "55",
+     2
+    ],
+    "start_at_step": 0,
+    "end_at_step": 2,
+    "return_with_leftover_noise": "enable"
+   }
+  },
+  "31": {
+   "class_type": "KSamplerAdvanced",
+   "inputs": {
+    "model": [
+     "21",
+     0
+    ],
+    "add_noise": "disable",
+    "noise_seed": 1,
+    "steps": 4,
+    "cfg": 1,
+    "sampler_name": "euler",
+    "scheduler": "simple",
+    "positive": [
+     "55",
+     0
+    ],
+    "negative": [
+     "55",
+     1
+    ],
+    "latent_image": [
+     "30",
+     0
+    ],
+    "start_at_step": 2,
+    "end_at_step": 10000,
+    "return_with_leftover_noise": "disable"
+   }
+  },
+  "8": {
+   "class_type": "VAEDecode",
+   "inputs": {
+    "samples": [
+     "31",
+     0
+    ],
+    "vae": [
+     "13",
+     0
+    ]
+   }
+  },
+  "58": {
+   "class_type": "SaveWEBM",
+   "inputs": {
+    "images": [
+     "8",
+     0
+    ],
+    "filename_prefix": "wan22_enhanced_nsfw",
+    "codec": "vp9",
+    "fps": 16.0,
+    "crf": 28.0
+   }
+  }
+ },
+ "prompt": [
+  [
+   "6",
+   "text"
+  ]
+ ],
+ "seed": [
+  [
+   "30",
+   "noise_seed"
+  ]
+ ],
+ "width": [
+  [
+   "55",
+   "width"
+  ]
+ ],
+ "height": [
+  [
+   "55",
+   "height"
+  ]
+ ],
+ "image": [
+  [
+   "14",
+   "image"
+  ]
+ ]
+}
