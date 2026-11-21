@@ -97,6 +97,27 @@ To rebuild: commit any change to the `main` branch of your copy — RunPod build
 This repo always follows the version the model's creator currently recommends. Now: **FastMove v2, Civitai versions 2477539 (high) + 2477548 (low)**.
 Each change of the build files is kept as a release (`files-…`). To stay on one, replace `latest/download` with `download/files-…` (that release's name) in both `ADD` lines of your `Dockerfile`.
 
+## Windows desktop app
+
+The repository includes a native Windows desktop client for running the workflow in a local ComfyUI installation.
+
+Requirements:
+
+- Windows 10 or 11
+- Python 3.10+
+- A local ComfyUI installation with ComfyUI 0.39.0 or newer
+- An NVIDIA GPU with at least 48 GB VRAM
+- The four model files listed above installed in the matching ComfyUI model directories
+
+1. Install ComfyUI and copy the four model files into it.
+2. Double-click `launch_desktop_app.ps1`, or run it from PowerShell.
+3. Click **Start local ComfyUI** and select the ComfyUI directory.
+4. Choose a starting image, enter a motion prompt, select an aspect ratio, and click **Generate video**.
+
+The app uploads the image to ComfyUI, submits `pack.json`, downloads the finished WEBM, and opens it automatically. To use a ComfyUI server on another machine, change the **ComfyUI address** field.
+
+The desktop app is a client; it does not download or embed the 33 GB+ model files. It needs a ComfyUI installation containing the model names used by `pack.json`.
+
 ## Use it
 
 Any client that sends ComfyUI API-format workflows to RunPod works. `pack.json` in this repo holds the workflow and tells a client where the prompt, seed and size go (format `pack/1`, engine `comfyui`).
